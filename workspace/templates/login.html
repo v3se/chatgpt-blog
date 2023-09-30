@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login Page</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.submit() }}
+    </form>
+    <a href="{{ url_for('home') }}">Home</a>
+</body>
+</html>

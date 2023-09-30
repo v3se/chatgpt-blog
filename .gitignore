@@ -1,0 +1,8 @@
+workspace/prompt
+*/file_list.txt
+*/all_output.txt
+*/.gpte_consent
+memory
+env
+archive
+__pycache__
