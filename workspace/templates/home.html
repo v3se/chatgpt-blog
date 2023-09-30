@@ -2,15 +2,22 @@
 <html>
 <head>
     <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Welcome to Home Page</h1>
-    {% for post in posts %}
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.content }}</p>
-    {% endfor %}
-    <a href="{{ url_for('login') }}">Login</a>
-    <a href="{{ url_for('logout') }}">Logout</a>
-    <a href="{{ url_for('new_post') }}">New Post</a>
+    <header>
+        <h1>Welcome to Home Page</h1>
+        <nav>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('new_post') }}">New Post</a>
+        </nav>
+    </header>
+    <div class="container">
+        {% for post in posts %}
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+        {% endfor %}
+    </div>
 </body>
 </html>
