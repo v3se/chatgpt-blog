@@ -8,9 +8,11 @@
     <header>
         <h1>Welcome to Home Page</h1>
         <nav>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="{{ url_for('new_post') }}">New Post</a>
+            {% endif %}
             <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
-            <a href="{{ url_for('new_post') }}">New Post</a>
         </nav>
     </header>
     <div class="container">

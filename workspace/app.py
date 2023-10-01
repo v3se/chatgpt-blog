@@ -1,6 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from flask_migrate import Migrate
 import os
 from models import User, Post
 from forms import LoginForm, PostForm
@@ -13,8 +12,8 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'kissatkoiria123'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///site.db'
 app.config['USE_MOCK_OAUTH'] = os.environ.get('USE_MOCK_OAUTH') or False
 db.init_app(app)
-migrate = Migrate(app, db)  # Initialize Migrate with the Flask app and SQLAlchemy database
 login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
 
 @app.route('/')
@@ -25,6 +24,11 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    
+    # Check if the user is already logged in
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))  # Redirect logged-in users to the home page
+    
     if form.validate_on_submit():
         if app.config['USE_MOCK_OAUTH']:
             user = User.query.filter_by(email='mockuser@gmail.com').first()
@@ -33,6 +37,7 @@ def login():
                 db.session.add(user)
                 db.session.commit()
             login_user(user)
+            flash('You have been logged in!', 'success')
             return redirect(url_for('home'))
         else:
             google_provider_cfg = get_google_provider_cfg()
@@ -43,7 +48,9 @@ def login():
                 scope=["openid", "email", "profile"],
             )
             return redirect(request_uri)
-    return render_template('login.html', form=form)
+    
+    # Render the login template with the form and conditional links
+    return render_template('login.html', form=form, show_logout_link=False)  # Pass show_logout_link as False
 
 @app.route("/login/callback")
 def callback():

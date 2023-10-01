@@ -6,3 +6,4 @@ memory
 env
 archive
 __pycache__
+venv

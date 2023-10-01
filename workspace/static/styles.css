@@ -83,3 +83,19 @@ nav a {
 nav a:hover {
     color: #ff6600; /* Change link color on hover to a different color */
 }
+
+/* Add these styles at the end of your styles.css file */
+
+/* Style the "Home" link on the login page to match the home page */
+.home-link {
+    color: #fff; /* Change link color to white */
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+/* Change link color on hover */
+.home-link:hover {
+    color: #ff6600; /* Change link color on hover to a different color */
+}
